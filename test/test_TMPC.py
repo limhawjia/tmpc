@@ -1,4 +1,4 @@
-from tmpc.tmpc import *
+from tmpc import *
 
 svy21_origin = Origin(1.3666666666, 103.83333333, 28001.6420, 38744.5720, 1.0000)
 svy21_spheroid = Spheroid(6378137.0000, 1 / 298.257223563)
