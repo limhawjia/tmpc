@@ -16,7 +16,7 @@ def sin2(x):
 
 
 def sec(x):
-    return 1 / cos(x)
+    return 1.0 / cos(x)
 
 
 # This class represents the origin of projection and is required by the Tmpc class to do any conversions.
@@ -56,15 +56,15 @@ class Tmpc:
         n3 = n2 * n
         n4 = n2 * n2
         g = params.a * (1 - n) * (1 - n2) * (1 + 9 * n2 / 4 + 255 * n4 / 64) * (pi / 180)
-        sigma = (m_prime * pi) / (180 * g)
-        lat_prime_term1 = (3 * n / 2 - 27 * n3 / 32) * sin(2 * sigma)
-        lat_prime_term2 = (21 * n2 / 16 - 55 * n4 / 32) * sin(4 * sigma)
-        lat_prime_term3 = 151 * n3 / 96 * sin(6 * sigma)
-        lat_prime_term4 = 1097 * n4 / 512 * sin(8 * sigma)
+        sigma = (m_prime * pi) / (180.0 * g)
+        lat_prime_term1 = (3.0 * n / 2.0 - 27.0 * n3 / 32.0) * sin(2.0 * sigma)
+        lat_prime_term2 = (21.0 * n2 / 16.0 - 55.0 * n4 / 32.0) * sin(4.0 * sigma)
+        lat_prime_term3 = 151.0 * n3 / 96.0 * sin(6.0 * sigma)
+        lat_prime_term4 = 1097.0 * n4 / 512.0 * sin(8.0 * sigma)
         lat_prime = sigma + lat_prime_term1 + lat_prime_term2 + lat_prime_term3 + lat_prime_term4
 
-        rho_prime = params.a * (1 - params.e2) / pow(1 - params.e2 * sin2(lat_prime), 3 / 2)
-        v_prime = params.a / sqrt(1 - params.e2 * sin2(lat_prime))
+        rho_prime = params.a * (1.0 - params.e2) / pow(1.0 - params.e2 * sin2(lat_prime), 3.0 / 2.0)
+        v_prime = params.a / sqrt(1.0 - params.e2 * sin2(lat_prime))
         psi_prime = v_prime / rho_prime
         psi_prime2 = psi_prime * psi_prime
         psi_prime3 = psi_prime * psi_prime * psi_prime
@@ -81,30 +81,30 @@ class Tmpc:
 
         # Get latitude
         lat_factor = t_prime / (params.k * rho_prime)
-        lat_term1 = lat_factor * (east_prime * x) / 2
-        lat_term2 = lat_factor * (east_prime * x3) / 24 * (
-                -4 * psi_prime + 9 * psi_prime * (1 - t_prime2) + 12 * t_prime2)
-        lat_term3 = lat_factor * (east_prime * x5) / 720 * \
-                    (8 * psi_prime4 * (11 - 24 * t_prime4) -
-                     12 * psi_prime3 * (21 - 71 * t_prime2) +
-                     15 * psi_prime2 * (15 - 98 * t_prime2 + 15 * t_prime4) +
-                     180 * psi_prime * (5 * t_prime2 - 3 * t_prime4) +
-                     360 * t_prime4)
-        lat_term4 = lat_factor * (east_prime * x7) / 40320 * (
-                1385 + 3633 * t_prime2 + 4095 * t_prime4 + 1575 * t_prime6)
+        lat_term1 = lat_factor * (east_prime * x) / 2.0
+        lat_term2 = lat_factor * (east_prime * x3) / 24.0 * (
+                -4.0 * psi_prime + 9.0 * psi_prime * (1.0 - t_prime2) + 12.0 * t_prime2)
+        lat_term3 = lat_factor * (east_prime * x5) / 720.0 * \
+                    (8.0 * psi_prime4 * (11.0 - 24.0 * t_prime4) -
+                     12.0 * psi_prime3 * (21.0 - 71.0 * t_prime2) +
+                     15.0 * psi_prime2 * (15.0 - 98.0 * t_prime2 + 15.0 * t_prime4) +
+                     180.0 * psi_prime * (5.0 * t_prime2 - 3.0 * t_prime4) +
+                     360.0 * t_prime4)
+        lat_term4 = lat_factor * (east_prime * x7) / 40320.0 * (
+                1385.0 + 3633.0 * t_prime2 + 4095.0 * t_prime4 + 1575.0 * t_prime6)
         lat_radians = lat_prime - lat_term1 + lat_term2 - lat_term3 + lat_term4
         lat = deg(lat_radians)
 
         # Get longitude
         long_term1 = x * sec(lat_prime)
-        long_term2 = x3 * sec(lat_prime) / 6 * (psi_prime + 2 * t_prime2)
-        long_term3 = x5 * sec(lat_prime) / 120 * \
-                     (-4 * psi_prime3 * (1 - 6 * t_prime2) +
-                      psi_prime2 * (9 - 68 * t_prime2) +
-                      72 * psi_prime * t_prime2 +
-                      24 * t_prime4)
-        long_term4 = x7 * sec(lat_prime) / 5040 * \
-                     (61 + 622 * t_prime2 + 1320 * t_prime4 + 720 * t_prime6)
+        long_term2 = x3 * sec(lat_prime) / 6.0 * (psi_prime + 2.0 * t_prime2)
+        long_term3 = x5 * sec(lat_prime) / 120.0 * \
+                     (-4.0 * psi_prime3 * (1.0 - 6.0 * t_prime2) +
+                      psi_prime2 * (9.0 - 68.0 * t_prime2) +
+                      72.0 * psi_prime * t_prime2 +
+                      24.0 * t_prime4)
+        long_term4 = x7 * sec(lat_prime) / 5040.0 * \
+                     (61.0 + 622.0 * t_prime2 + 1320.0 * t_prime4 + 720.0 * t_prime6)
         long_radians = rad(params.long_origin) + long_term1 - long_term2 + long_term3 - long_term4
         long = deg(long_radians)
 
@@ -127,15 +127,15 @@ class Parameters:
         self.east_false = origin.false_easting
         self.k = origin.central_meridian_scale_factor
 
-        self.b = self.a * (1 - self.f)
-        self.e2 = 2 * self.f - self.f * self.f
+        self.b = self.a * (1.0 - self.f)
+        self.e2 = 2.0 * self.f - self.f * self.f
         self.e4 = self.e2 * self.e2
         self.e6 = self.e2 * self.e2 * self.e2
 
-        A0 = 1 - self.e2 / 4 - 3 * self.e4 / 64 - 5 * self.e6 / 256
-        A2 = 3 / 8 * (self.e2 + self.e4 / 4 + 15 * self.e6 / 128)
-        A4 = 15 / 256 * (self.e4 + 3 * self.e6 / 4)
-        A6 = 35 * self.e6 / 3072
+        A0 = 1.0 - self.e2 / 4.0 - 3.0 * self.e4 / 64.0 - 5.0 * self.e6 / 256.0
+        A2 = 3.0 / 8.0 * (self.e2 + self.e4 / 4.0 + 15.0 * self.e6 / 128.0)
+        A4 = 15.0 / 256.0 * (self.e4 + 3.0 * self.e6 / 4.0)
+        A6 = 35.0 * self.e6 / 3072.0
 
         self.m0 = self.a * (A0 * rad(self.lat_origin) -
                             A2 * sin(2 * rad(self.lat_origin)) +
