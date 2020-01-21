@@ -178,7 +178,7 @@ class Tmpc:
         east_term3 = omega6 / 5040 * cos6(rad(lat)) * (61 - 479 * t2 + 179 * t4 - t6)
         east = params.east_false + params.k * v * omega * cos(rad(lat)) * (1 + east_term1 + east_term2 + east_term3)
 
-        return north, east
+        return round(north, 10), round(east, 10)
 
 
 # This class represents the entire set of common parameters needed conversion between the two coordinate systems. They
